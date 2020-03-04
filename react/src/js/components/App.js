@@ -1,19 +1,33 @@
 import React, {useState} from 'react';
 import data from './data.json'
-
-console.log('data', data)
+import Loader from './loader.js';
 
 const App = () =>{
+  
   const [loadersList, setLoaderList] = useState([]) 
+
+  const handleClick = (e) =>{
+    console.log('value: ', e.target.vlaue);
+    setLoaderList(data.loaders)
+  }
+
+  const getLoaders = ()=>{
+   return <ul>
+            {
+              loadersList.map((loader)=>{
+              return <Loader data={loader} key={loader.id}/>
+              })
+            }
+          </ul>
+  }
+
   return(
     <div>
-      <ul>
-        {
-          loadersList.map((loader)=>{
-          return <li key={loader.id}> <p>{loader.name}</p> </li>
-          })
-        }
-      </ul>
+      {
+        loadersList.length > 0 &&
+          getLoaders()
+      }
+      <button onClick={handleClick}>Show Loaders</button>
     </div>
   )
 }
